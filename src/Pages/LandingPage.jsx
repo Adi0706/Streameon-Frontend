@@ -13,8 +13,8 @@ function LandingPage() {
   <div className='Body-text  w-1/2 p-4 text-left text-9xl text-white font-bold'>
  <p className='ml-7'>Unleash the<br></br> Power of<br></br> Real-Time Video Connections.</p>
   </div>
-  <div className='Body-video w-1/2 p-4 text-center mr-12  h-5/6'>
-    <video src={VideoLand} autoPlay loop muted  className='w-full h-full object-cover rounded-xl shadow-xl'></video>
+  <div className='Body-video w-1/2 p-4 text-center mr-24  h-5/6'>
+    <video src={VideoLand} autoPlay loop muted  className='w-full h-full object-cover rounded-full shadow-xl'></video>
   </div>
   
 </div>
