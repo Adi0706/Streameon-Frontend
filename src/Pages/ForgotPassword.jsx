@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react'
 import Background from "../Media/LandingImage.png";
 import icon from "../Media/video-camera-icon.png";
-import gicon from '../Media/gicon.png';
 import {Link} from 'react-router-dom' ;
 
-function Signup() {
+function ForgotPassword() {
   return (
     <>
-      <div className="Signup-Container w-screen h-screen">
+    <div className='forgotpassword-container'>
+    <div className="Signup-Container w-screen h-screen">
         <img
           src={Background}
           alt="background-image"
@@ -18,7 +18,7 @@ function Signup() {
           {/* Heading */}
           <div className="flex flex-col items-center m-7">
           <Link to='/'><img src={icon} alt="streameon-icon" className="w-7 h-7" /></Link>
-            <p className="p-2 font-bold">Login to Streameon!</p>
+            <p className="p-2 font-bold">Reset Password !</p>
           </div>
           
           {/* Form */}
@@ -41,40 +41,20 @@ function Signup() {
               />
             </div>
 
-            {/* Password input */}
-            <div className="mb-6">
-              <label
-                htmlFor="password"
-                className="block text-gray-700 font-bold mb-2"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight  focus:shadow-outline"
-                placeholder="Create a password"
-                required
-              />
-            </div>
             
-         <div className="m-7 flex flex-col items-center">
-            <Link to='/Forgotpassword'><p className="m-2 font-bold">Forgot Password ?</p></Link>
-            <p>Don't have an account ? <Link to='/Signup'><span className="font-bold">Signup</span></Link></p>
-         </div>
             {/* Submit button */}
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
-         Log In
+       Send Reset Link 
             </button>
           </form>
         </div>
       </div>
+    </div>
     </>
-  );
+  )
 }
 
-export default Signup;
+export default ForgotPassword
