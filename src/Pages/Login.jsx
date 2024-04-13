@@ -3,8 +3,31 @@ import Background from "../Media/LandingImage.png";
 import icon from "../Media/video-camera-icon.png";
 import gicon from '../Media/gicon.png';
 import {Link} from 'react-router-dom' ;
+import { useState } from "react";
+import axios from 'axios' ; 
+import { useNavigate } from "react-router-dom";
 
-function Signup() {
+function Login() {
+  const [email,setEmail] = useState('') ;
+  const [password,setPassword]=useState('') ; 
+  const navigate = useNavigate();
+
+const handleSubmit=(e)=>{
+  e.preventDefault() ;
+  axios.post("http://localhost:8000/api/Login",{email,password}) 
+.then(result=>{
+  console.log(result)
+  if(result.data.message==="Login successful"){
+    alert("login done")
+    navigate('/Home')
+  }
+})
+.catch(err=>console.log(err))
+}
+
+
+
+
   return (
     <>
       <div className="Signup-Container w-screen h-screen">
@@ -22,7 +45,7 @@ function Signup() {
           </div>
           
           {/* Form */}
-          <form className="w-full max-w-sm flex flex-col p-7">
+          <form className="w-full max-w-sm flex flex-col p-7" onSubmit={handleSubmit}>
             {/* Email input */}
             <div className="mb-4">
               <label
@@ -38,6 +61,8 @@ function Signup() {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"
                 placeholder="Enter your email"
                 required
+                value={email}
+                onChange={e=>setEmail(e.target.value)}
               />
             </div>
 
@@ -56,10 +81,13 @@ function Signup() {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight  focus:shadow-outline"
                 placeholder="Create a password"
                 required
+                value={password}
+                onChange={e=>setPassword(e.target.value)}
               />
             </div>
             
          <div className="m-7 flex flex-col items-center">
+         <img src={gicon} alt="googleauth" className="w-7 h-7 m-5"></img>
             <Link to='/Forgotpassword'><p className="m-2 font-bold">Forgot Password ?</p></Link>
             <p>Don't have an account ? <Link to='/Signup'><span className="font-bold">Signup</span></Link></p>
          </div>
@@ -77,4 +105,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Login;
