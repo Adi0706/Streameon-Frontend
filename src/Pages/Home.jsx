@@ -1,9 +1,18 @@
 import React from 'react'
+import Background from "../Media/LandingImage.png";
+import HomeNavBar from '../Components/HomeNavbar';
 
 function Home() {
   return (
 <>
-<h1 className='text-9xl'>THIS THE HOMEPAGE</h1>
+<div className='Home-Container w-screen h-screen' >
+  <HomeNavBar/>
+<img
+          src={Background}
+          alt="background-image"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+</div>
 </>
   )
 }
