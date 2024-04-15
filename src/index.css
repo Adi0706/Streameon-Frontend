@@ -20,17 +20,17 @@ code {
 .navbar {
   background-color:transparent;
   color: #fff;
-  padding: 10px;
   position: fixed;
-  width: 100%;
   z-index: 1001;
   margin-top:0px;
+
 
 }
 
 .navbar ul {
   display: flex;
   justify-content: space-between;
+  align-items:center;
   padding: 0;
   margin: 0;
 }
@@ -53,5 +53,20 @@ code {
   font-family: "Poppins", sans-serif;
   background-color: #ffffff;
   border-radius: 8px;
+
+}
+.Room-form{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  font-family: "Poppins", sans-serif;
+  border-radius: 8px;
+
+}
+.Dropdown{
+  position:absolute;
+  z-index:999 ; 
 
 }
