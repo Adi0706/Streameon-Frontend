@@ -59,7 +59,7 @@ function HomeNavBar() {
             <div className="Dropdown  mt-36 w-36 rounded-lg shadow-xl z-10 ">
               <ul className="py-2 flex flex-col text-black ">
                 <li className="px-4 py-2 text-lg  cursor-pointer hover:text-white">
-                  <NavLink to="/profile" className="">Profile</NavLink>
+                  <NavLink to="/Profile" className="">Profile</NavLink>
                 </li>
                 <li className="px-4 py-2  text-lg  cursor-pointer hover:text-white">
                   <p onClick={handleLogout}>Log Out</p>
