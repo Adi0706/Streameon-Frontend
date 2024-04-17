@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Background from "../Media/LandingImage.png";
 import Preview from "../Media/preview.png";
 import VideoIcon from "../Media/video-camera-icon.png";
+import axios from 'axios';
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/Users");
+        const { data } = response; // Destructure the data object from the response
+        console.log(data);
+        setName(data.name); // Set name from the response data
+        setEmail(data.email); // Set email from the response data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getData();
+  }, []);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -56,39 +75,37 @@ function Profile() {
             )}
           </div>
           <div className="w-36 h-36 flex flex-col items-start p-3 font-bold">
-            <p className="text-sm ">Aditya Bhattacharjee</p>
-            <p className="text-sm">adityabhattacharjee@gmail.com</p>
-            
+            <p className="text-sm ">{name}</p>
+            <p className="text-sm">{email}</p>
           </div>
         </div>
         {isEditing && (
-        <form className="mt-5 w-full">
-        <div className="mb-3">
-          <label htmlFor="name" className="block text-sm font-bold text-gray-700">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Enter your name"
-            className="w-full   rounded-xl p-2"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="block text-sm font-bold text-gray-700">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-            className="w-full   rounded-xl p-2"
-          />
-        </div>
-      </form>
-      
+          <form className="mt-5 w-full">
+            <div className="mb-3">
+              <label htmlFor="name" className="block text-sm font-bold text-gray-700">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your name"
+                className="w-full   rounded-xl p-2"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="email" className="block text-sm font-bold text-gray-700">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                className="w-full   rounded-xl p-2"
+              />
+            </div>
+          </form>
         )}
       </div>
     </div>
