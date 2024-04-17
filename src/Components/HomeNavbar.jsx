@@ -51,9 +51,9 @@ function HomeNavBar() {
           ref={dropdownRef}
         >
          
-          <span className=" flex items-center gap-2 text-black text-sm font-bold ml-2 transition-transform hover:scale-110 hover:shadow-slate-600">
+          <span className=" flex items-center gap-2 text-black text-sm font-bold mr-36  transition-transform hover:scale-110 hover:shadow-slate-600">
           <img src={user} alt="user-icon" className="w-7 h-7 " />
-            Hello Aditya Bhattacharjee!
+            Hello !
           </span>
           {accountDropDown && (
             <div className="Dropdown  mt-36 w-36 rounded-lg shadow-xl z-10 ">

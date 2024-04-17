@@ -1,39 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Background from "../Media/LandingImage.png";
-import Preview from "../Media/preview.png";
 import VideoIcon from "../Media/video-camera-icon.png";
 import axios from 'axios';
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
-  const [email, setEmail] = useState('');
+  const [file, setFile] = useState(null);
+  const [image, setImage] = useState('');
   const [name, setName] = useState('');
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/Users");
-        const { data } = response; // Destructure the data object from the response
-        console.log(data);
-        setName(data.name); // Set name from the response data
-        setEmail(data.email); // Set email from the response data
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    getData();
-  }, []);
+  const [email, setEmail] = useState('');
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
-  const handleSaveClick = () => {
-    // Logic to save form data can be added here
-    setIsEditing(false);
-  };
+  const handleUpload = () => {
+    if (!file) {
+      console.error("No file selected.");
+      return;
+    }
 
+    const formData = new FormData();
+    formData.append('file', file);
+
+    axios.post("http://localhost:8000/api/Upload", formData)
+      .then(res => {
+        console.log(res.data);
+        setImage(res.data.image); // Update the image state with the new URL
+        // setIsEditing(false); // Exit edit mode after successful upload
+      })
+      .catch(err => console.error(err));
+  };
+  
   return (
     <div className="Profile-Container w-full h-full flex justify-center items-center">
       <img
@@ -49,34 +47,41 @@ function Profile() {
         <div className="flex items-center gap-5">
           <div className="flex flex-col items-center">
             <img
-              src={Preview}
-              className="border border-solid border-black rounded-full w-36 h-36"
+              src={`http://localhost:8000/Images/${image}`}
+              className="border border-solid border-black rounded-full w-36 h-36 m-5"
               alt="profile-preview"
             />
             {isEditing ? (
-              <>
-                <button className="mt-3 bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                  Upload New Picture
-                </button>
+              <div className="flex flex-col items-center">
+                {/* Styled file input */}
+                <input
+                  id="file-upload"
+                  type="file"
+                  className="hidden"
+                  style={{ display: "none" }} 
+                  onChange={e => setFile(e.target.files[0])}
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="cursor-pointer bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                >
+                  Upload Profile Picture
+                </label>
                 <button
                   className="mt-3 bg-green-500 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-                  onClick={handleSaveClick}
+                  onClick={handleUpload}
                 >
                   Save
                 </button>
-              </>
+              </div>
             ) : (
               <button
-                className="mt-3 bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-3 bg-blue-500 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 onClick={handleEditClick}
               >
-                Edit Profile 
+                Edit Profile
               </button>
             )}
-          </div>
-          <div className="w-36 h-36 flex flex-col items-start p-3 font-bold">
-            <p className="text-sm ">{name}</p>
-            <p className="text-sm">{email}</p>
           </div>
         </div>
         {isEditing && (
@@ -89,6 +94,8 @@ function Profile() {
                 type="text"
                 id="name"
                 name="name"
+                value={name}
+                onChange={e => setName(e.target.value)}
                 placeholder="Enter your name"
                 className="w-full   rounded-xl p-2"
               />
@@ -101,6 +108,8 @@ function Profile() {
                 type="email"
                 id="email"
                 name="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 className="w-full   rounded-xl p-2"
               />
