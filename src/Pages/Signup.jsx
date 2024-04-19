@@ -6,14 +6,14 @@ import {Link} from 'react-router-dom' ;
 import { useState } from "react";
 import axios from 'axios' ;
 import {useNavigate} from 'react-router-dom';
-import SignupToast from '../Components/SignupToast';
+
 
 function Signup() {
   const[name,setName] = useState('')
   const [email,setEmail] = useState('') ; 
   const [password,setPassword] = useState('')
   const navigate = useNavigate()
-  const [showToast,setShowToast] = useState(false) ; 
+
 
 
   const handleSubmit=(e)=>{
@@ -22,8 +22,6 @@ function Signup() {
     .then(result=>{
       console.log(result)
      if(result.data.message==="Success"){
-      setShowToast(true);
-      console.log(showToast);
       navigate('/Login');
      }
   
@@ -38,7 +36,7 @@ function Signup() {
   return (
     <>
       <div className="Signup-Container w-screen h-screen">
-      {showToast && <SignupToast />}
+      
      
         <img
           src={Background}
