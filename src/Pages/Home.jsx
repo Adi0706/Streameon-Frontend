@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import Background from "../Media/LandingImage.png";
 import HomeNavBar from '../Components/HomeNavbar';
 import icon from "../Media/video-camera-icon.png";
+import { useState } from 'react';
 
 function Home() {
+  const [email,setEmail] = useState('') ; 
+  const [room,setRoom] = useState('') ; 
 
+  const handleSubmit = useCallback((e)=>{
+e.preventDefault() ; 
+console.log ({
+  email,room
+})
+  },[email,room])
 
-  const handleSubmit=(e)=>{
-e.preventDefault();
-  }
+  
   return (
 <>
 <div className='Home-Container w-screen h-screen' >
@@ -29,6 +36,8 @@ e.preventDefault();
         type="email"
         id="email"
         name="email"
+        value={email}
+        onChange={(e)=>setEmail(e.target.value)}
         className="mt-1 p-2 border border-gray-300 rounded-md w-full"
         placeholder="Enter your email"
         required
@@ -40,6 +49,8 @@ e.preventDefault();
         type="text"
         id="roomNumber"
         name="roomNumber"
+        value={room}
+        onChange={(e)=>setRoom(e.target.value)}
         className="mt-1 p-2 border border-gray-300 rounded-md w-full"
         placeholder="Enter room number"
         required
