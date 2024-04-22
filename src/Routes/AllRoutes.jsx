@@ -18,7 +18,7 @@ function AllRoutes() {
     <Route path='/Forgotpassword' element={<ForgotPassword/>}/>
     <Route path='/Home' element={<Home/>}/>
     <Route path='/ResetPassword' element={<ResetPassword/>}/>
-    <Route path='/Room' element={<Room/>}/>
+    <Route path='/Room/:RoomId' element={<Room/>}/>
    </Routes>
    </>
   )

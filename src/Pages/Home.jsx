@@ -1,20 +1,36 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Background from "../Media/LandingImage.png";
 import HomeNavBar from '../Components/HomeNavbar';
 import icon from "../Media/video-camera-icon.png";
 import { useState } from 'react';
+import { useSocket } from '../Context/SocketProvider';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
-  const [email,setEmail] = useState('') ; 
+  const [userName,setUserName] = useState('') ; 
   const [room,setRoom] = useState('') ; 
+  const navigate = useNavigate() ; 
 
-  const handleSubmit = useCallback((e)=>{
+  const socket = useSocket() ; 
+
+const handleSubmit = useCallback((e)=>{
 e.preventDefault() ; 
-console.log ({
-  email,room
-})
-  },[email,room])
+socket.emit("room:join",{userName,room}) ; 
+},[userName,room,socket])
 
+const handleJoinRoom = useCallback((data)=>{
+  const {userName,room} = data ; 
+  navigate(`/Room/${room}`)
+
+},[navigate])
+useEffect(()=>{
+  socket.on("room:join",handleJoinRoom); 
+
+  return ()=>{
+    socket.off("room:join",handleJoinRoom) ; 
+  }
+  
+},[socket,handleJoinRoom])
   
   return (
 <>
@@ -31,15 +47,15 @@ console.log ({
   <img src={icon} alt="streameon-icon" className="w-7 h-7" />
   <p className='font-bold'>Start a Video Call !</p>
     <div className="mb-4">
-      <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+      <label htmlFor="userName" className="block text-sm font-medium text-gray-700">User Name</label>
       <input
-        type="email"
-        id="email"
-        name="email"
-        value={email}
-        onChange={(e)=>setEmail(e.target.value)}
+        type="text"
+        id="userName"
+        name="userName"
+        value={userName}
+        onChange={(e)=>setUserName(e.target.value)}
         className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-        placeholder="Enter your email"
+        placeholder="Enter your User Name"
         required
       />
     </div>
@@ -60,7 +76,7 @@ console.log ({
       type="submit"
       className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
     >
-       Send Call
+   Join Call
     </button>
   </form>
 </div>
