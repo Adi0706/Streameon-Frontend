@@ -13,6 +13,7 @@ function HomeNavBar() {
     } else {
       // If in a room, leave the room and redirect to Home
       navigate('/Home');
+     
     }
   };
 
