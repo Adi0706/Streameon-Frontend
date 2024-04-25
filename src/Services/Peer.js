@@ -28,10 +28,10 @@ async setLocalDescription(answer){
         await this.peer.setRemoteDescription(new RTCSessionDescription(answer)) ; 
     }
 }
-async getOffer(offer){
+async getOffer(){
     if(this.peer){
         const  offer = await this.peer.createOffer() ; 
-        await this .peer.setLocalDescription(new RTCSessionDescription(offer)) ; 
+        await this.peer.setLocalDescription(new RTCSessionDescription(offer)) ; 
         return offer ; 
     }
 }
