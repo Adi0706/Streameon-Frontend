@@ -7,7 +7,7 @@ import { useSocket } from '../Context/SocketProvider';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
-  const [userName,setUserName] = useState('') ; 
+  
   const [room,setRoom] = useState('') ; 
   const navigate = useNavigate() ; 
 
@@ -15,11 +15,11 @@ function Home() {
 
 const handleSubmit = useCallback((e)=>{
 e.preventDefault() ; 
-socket.emit("room:join",{userName,room}) ; 
-},[userName,room,socket])
+socket.emit("room:join",{room}) ; 
+},[room,socket])
 
 const handleJoinRoom = useCallback((data)=>{
-  const {userName,room} = data ; 
+  const {room} = data ; 
   navigate(`/Room/${room}`)
 
 },[navigate])
@@ -46,19 +46,7 @@ useEffect(()=>{
   <form onSubmit={handleSubmit} className='flex flex-col p-7 gap-5  items-center'>
   <img src={icon} alt="streameon-icon" className="w-7 h-7" />
   <p className='font-bold'>Start a Video Call !</p>
-    <div className="mb-4">
-      <label htmlFor="userName" className="block text-sm font-medium text-gray-700">User Name</label>
-      <input
-        type="text"
-        id="userName"
-        name="userName"
-        value={userName}
-        onChange={(e)=>setUserName(e.target.value)}
-        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-        placeholder="Enter your User Name"
-        required
-      />
-    </div>
+    
     <div className="mb-4">
       <label htmlFor="roomNumber" className="block text-sm font-medium text-gray-700">Room Number</label>
       <input
