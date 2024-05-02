@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Background from "../Media/LandingImage.png";
 import icon from "../Media/video-camera-icon.png";
 import {Link} from 'react-router-dom' ;
+import axios from 'axios' ; 
+import { useNavigate } from 'react-router-dom';
 
 function ForgotPassword() {
+  const [email,setEmail] = useState('') ; 
+  const navigate = useNavigate(); 
+
+const handleSubmit=(e)=>{
+e.preventDefault() ; 
+axios.post('http://localhost:8000/api/ForgotPassword',{email})
+.then(res=>{
+  if(res.data.message==='Success'){
+navigate('/Login');
+  }
+})
+}
+
   return (
     <>
     <div className='forgotpassword-container'>
@@ -35,17 +50,22 @@ function ForgotPassword() {
                 type="email"
                 id="email"
                 name="email"
+                value={email}
+                onChange={e=>setEmail(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"
                 placeholder="Enter your email"
                 required
               />
             </div>
 
+           <Link to='/Login'><p className='mb-7 font-bold'>Already have an account ? </p></Link> 
+
             
             {/* Submit button */}
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              onClick={handleSubmit}
             >
        Send Reset Link 
             </button>

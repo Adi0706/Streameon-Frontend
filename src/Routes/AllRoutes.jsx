@@ -17,7 +17,7 @@ function AllRoutes() {
     <Route path='/Login' element={<Login/>}/>
     <Route path='/Forgotpassword' element={<ForgotPassword/>}/>
     <Route path='/Home' element={<Home/>}/>
-    <Route path='/ResetPassword' element={<ResetPassword/>}/>
+    <Route path='/ResetPassword/:id/:token' element={<ResetPassword/>}/>
     
    </Routes>
    </>
