@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Peer from "simple-peer";
 import io from "socket.io-client";
+import { FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash } from 'react-icons/fa';
 import HomeNavbar from '../Components/HomeNavbar'
 import Background from "../Media/LandingImage.png";
 
@@ -24,6 +25,13 @@ function Home() {
   const connectionRef = useRef(null);
 
   useEffect(() => {
+    // Initialize socket and set user ID on component mount
+    socket.on("me", (id) => {
+      console.log("Received user ID:", id);
+      setMe(id); // Set user ID upon receiving it from the server
+    });
+
+    // Get user media stream
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       .then((stream) => {
         setStream(stream);
@@ -34,11 +42,6 @@ function Home() {
       .catch(error => console.error('Error accessing media devices:', error));
 
     // Socket event listeners
-    socket.on("me", (id) => {
-      console.log("Received user ID:", id);
-      setMe(id); // Set user ID upon receiving it from the server
-    });
-
     socket.on("callUser", (data) => {
       setReceivingCall(true);
       setCaller(data.from);
@@ -177,10 +180,16 @@ function Home() {
             )}
             <span className="ml-2">{me}</span>
           </div>
-          <div className="audio-video-controls mt-4">
-            <button className={`bg-${audioEnabled ? 'green' : 'red'}-500 hover:bg-${audioEnabled ? 'green' : 'red'}-700 text-white font-bold py-2 px-4 rounded mr-2`} onClick={toggleAudio}>{audioEnabled ? 'Mute Audio' : 'Unmute Audio'}</button>
-            <button className={`bg-${videoEnabled ? 'green' : 'red'}-500 hover:bg-${videoEnabled ? 'green' : 'red'}-700 text-white font-bold py-2 px-4 rounded`} onClick={toggleVideo}>{videoEnabled ? 'Turn Off Video' : 'Turn On Video'}</button>
-          </div>
+          {callAccepted && !callEnded && (
+            <div className="audio-video-controls mt-4">
+              <button className={`bg-transparent border-0 text-${audioEnabled ? 'green' : 'red'}-500 hover:text-${audioEnabled ? 'green' : 'red'}-700 font-bold py-2 px-4 rounded mr-2`} onClick={toggleAudio}>
+                {audioEnabled ? <FaMicrophone /> : <FaMicrophoneSlash />}
+              </button>
+              <button className={`bg-transparent border-0 text-${videoEnabled ? 'green' : 'red'}-500 hover:text-${videoEnabled ? 'green' : 'red'}-700 font-bold py-2 px-4 rounded mr-2`} onClick={toggleVideo}>
+                {videoEnabled ? <FaVideo /> : <FaVideoSlash />}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

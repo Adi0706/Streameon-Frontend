@@ -1,7 +1,6 @@
 import React from "react";
 import Background from "../Media/LandingImage.png";
 import icon from "../Media/video-camera-icon.png";
-import gicon from '../Media/gicon.png';
 import {Link} from 'react-router-dom' ;
 import { useState } from "react";
 import axios from 'axios' ;
@@ -114,7 +113,7 @@ function Signup() {
             </div>
             
          <div className="m-7 flex flex-col items-center">
-            <img src={gicon} alt="googleauth" className="w-7 h-7 m-5" ></img>
+            
             <p>Already have an account ? <Link to='/Login'><span className="font-bold">Login</span></Link></p>
          </div>
             {/* Submit button */}
